@@ -3,6 +3,8 @@
 SONAR_DIR=/opt/sonar
 SONAR_PLUGINS_DIR=$SONAR_DIR/extensions/plugins
 SONAR_LOG_DIR=$SONAR_DIR/logs
+SONAR_USR=sonar
+SONAR_GRP=adm
 
 #DOC : Exits if an error occured during with the last command
 function assert {
@@ -45,7 +47,7 @@ done
 
 mv "$PLUGIN_TO_DEPLOY" "$SONAR_PLUGINS_DIR/"
 
-chown sonar:adm "$SONAR_PLUGINS_DIR/$PLUGIN_NAME"*
+chown "$SONAR_USR:$SONAR_GRP" "$SONAR_PLUGINS_DIR/$PLUGIN_NAME"*
 
 read -rp "Restart sonar: (y/n) " restart
 if [ "$restart" == "y" ]
@@ -59,5 +61,5 @@ then
   done
   echo "SonarQube started succesfully."
 else
-  echo "You need to restart SonarQube server for plugin to enable the new plugin."
+  echo "You need to restart the SonarQube server to enable the new plugin."
 fi
