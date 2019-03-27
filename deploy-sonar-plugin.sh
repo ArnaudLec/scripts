@@ -21,8 +21,8 @@ fi
 
 PLUGIN_TO_DEPLOY=$1
 echo "Deploying SonarQube plugin '$PLUGIN_TO_DEPLOY'..."
-PLUGIN_VERSION=$(echo "$PLUGIN_TO_DEPLOY" | sed -nre 's/^[^0-9]*-(([0-9]+\.)*[0-9]+)\.jar$/\1/p' )
-PLUGIN_NAME=$(echo "$PLUGIN_TO_DEPLOY" | sed -nre 's/^([^0-9]*)-(([0-9]+\.)*[0-9]+)\.jar$/\1/p' )
+PLUGIN_VERSION=$(echo "$PLUGIN_TO_DEPLOY" | sed -nre 's/^[^0-9]*-((:?[0-9]+\.)*[0-9]+(:?-[A-Z0-9]+)?)\.jar$/\1/p' )
+PLUGIN_NAME=$(echo "$PLUGIN_TO_DEPLOY" | sed -nre 's/^([^0-9]*)-(:?(:?[0-9]+\.)*[0-9]+(:?-[A-Z0-9]+)?)\.jar$/\1/p' )
 echo "Name: $PLUGIN_NAME, Version: $PLUGIN_VERSION"
 
 for f in $SONAR_PLUGINS_DIR/*
