@@ -4,7 +4,7 @@ SONAR_DIR=/opt/sonar
 SONAR_PLUGINS_DIR=$SONAR_DIR/extensions/plugins
 SONAR_LOG_DIR=$SONAR_DIR/logs
 SONAR_USR=sonar
-SONAR_GRP=adm
+SONAR_GRP=nogroup
 
 #DOC : Exits if an error occured during with the last command
 function assert {
@@ -55,9 +55,10 @@ then
   echo "Restarting SonarQube..."
   service sonar restart
   assert
-  tail -n0 -f $SONAR_LOG_DIR/sonar.log | while read -r LOGLINE
+  currentDate=$(date '+%Y%m%d')
+  tail -n0 -f "$SONAR_LOG_DIR/sonar.$currentDate.log" | while read -r LOGLINE
   do
-    [[ "${LOGLINE}" == *"SonarQube is up"* ]] && pkill -P $$ tail
+    [[ "${LOGLINE}" == *"SonarQube is operational"* ]] && pkill -P $$ tail
   done
   echo "SonarQube started succesfully."
 else
